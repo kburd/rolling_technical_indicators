@@ -1,6 +1,6 @@
 
 from queue import Queue 
-from model import Node
+from rolling_technical_indicators.model import Node
 
 class ExponentialMovingAverage(Node):
 
@@ -85,3 +85,46 @@ class StandardDeviation(Node):
         summation = a -2*b*c + self.period*b**2
 
         self.value = (summation/(self.period-1))**.5
+
+class SmoothedMovingAverage(ExponentialMovingAverage):
+
+    def __init__(self, period):
+        
+        self.value = None
+        self.alpha = 1/period
+
+class TrueRange(Node):
+
+    self.previousClose = None
+    self.currentHigh = None
+    self.currentLow = None
+    self.value = None
+
+    def add(self, record):
+        self.currentHigh = record.high
+        self.currentLow = record.low
+
+    def isFull(self):
+        return self.previousClose != None
+
+    def calculate(self):
+        self.value = max(self.currentHigh, self.previousClose) - min(self.currentLow, self.previousClose)
+
+    def store(self, record):
+        self.previousClose = record.close 
+
+
+class AverageTrueRange(Node):
+
+    def __init__(self, period):
+        self.trueRange = TrueRange()
+        self.smoothedMovingAvg = SmoothedMovingAverage(period)
+
+    def add(self, record):
+        self.trueRange.put(record)
+
+    def calculate(self):
+        tr = max(self.currentHigh, self.previousClose) - min(self.currentLow, self.previousClose)
+        self.smoothedMovingAvg.put(tr)
+        self.value = self.smoothedMovingAvg.get()
+    

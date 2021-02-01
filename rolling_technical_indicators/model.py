@@ -1,18 +1,6 @@
 
 import enum
 
-class Record:
-
-    def __init__(self):
-
-        self.open = None
-        self.close = None
-        self.high = None
-        self.low = None
-        self.volume = None
-        self.date = None
-        self.time = None
-
 class Node:
 
     def put(self, data):
@@ -21,6 +9,8 @@ class Node:
 
         if self.isFull():
             self.calculate()
+
+        self.store(data)
 
     def get(self):
         return self.value
@@ -31,5 +21,3 @@ class PredictionType(enum.Enum):
    SELL = "Sell"
    HOLD = "Hold"
    NULL = None
-
-
