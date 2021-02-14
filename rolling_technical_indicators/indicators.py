@@ -4,7 +4,9 @@ from rolling_technical_indicators.model import Node
 
 class BollingerBands(Node):
 
-    def __init__(self, period):
+    def __init__(self, config):
+
+        period = config.bollingbandPeriod
         
         self.smoothedTypical = SimpleMovingAverage(period)
         self.stdev = StandardDeviation(period)
@@ -31,6 +33,8 @@ class BollingerBands(Node):
 class ADX(Node):
 
     def __init__(self, period):
+
+        period = config.adxPeriod
 
         self.smoothedAbs = SmoothedMovingAverage(period)
         self.plusDM = SmoothedMovingAverage(period)

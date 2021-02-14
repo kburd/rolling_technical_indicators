@@ -95,10 +95,10 @@ class SmoothedMovingAverage(ExponentialMovingAverage):
 
 class TrueRange(Node):
 
-    self.previousClose = None
-    self.currentHigh = None
-    self.currentLow = None
-    self.value = None
+    previousClose = None
+    currentHigh = None
+    currentLow = None
+    value = None
 
     def add(self, record):
         self.currentHigh = record.high

@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='rolling_technical_indicators',
-    version='0.0.2',
+    version='0.0.5',
     description='A plugin to utilize technical indicators',
     url='https://github.com/kburd/rolling_technical_indicators',
     author='Kaleb Burd',
